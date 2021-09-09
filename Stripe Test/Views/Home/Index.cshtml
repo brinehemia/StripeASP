@@ -1,0 +1,33 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<Stripe_Test.Helpers.StripeSettings> StripeSettings
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="text-center">
+        <form asp-action="PaymentWithReturnView" asp-controller="Home" method="post">
+            <article>
+                <label>Bayar: US$5</label>
+            </article>
+            
+            <script src="https://js.stripe.com/v3/"></script>
+            <script src="https://checkout.stripe.com/v3/checkout.js"
+                    class="stripe-button"
+                    data-key="@StripeSettings.Value.PublishKey"
+                    data-locale="auto"
+                    data-description="Test Stripe"
+                    data-amount="500">
+            </script>
+
+        </form>
+    </div>
+
+
+</div>
