@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div class="text-center">
+            <article>
+                <label>Bayar: US$5</label>
+            </article>
+
+            <button id="pay-button" style="cursor:pointer">Click Midtrans</button>
+        
+    </div>
+
+</div>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-VrSHfchSoY956Su_"></script>
+
+
+<script id="midtrans-script" type="text/javascript"
+        src="https://api.midtrans.com/v2/assets/js/midtrans-new-3ds.min.js"
+        data-environment="sandbox"
+        data-client-key="SB-Mid-client-VrSHfchSoY956Su_"></script>
+
+<script type="text/javascript">
+
+    const payButton = document.querySelector('#pay-button');
+    payButton.addEventListener('click', function (e) {
+
+        $.post('@Url.Action("GetSnapToken", "Home")', null, function (result) {
+            console.log("Result GetSnapToken = ", result);
+            console.log("SnapToken = ", result.token);
+
+            snap.pay(result.token, {
+                // Optional
+                onSuccess: function (result) {
+                    
+                    console.log(result)
+                },
+                // Optional
+                onPending: function (result) { 
+                    // On Pending Biasanya di pakai di VA Atau Credit Card yg butuh verifikasi 3ds
+
+                    console.log(result)
+                },
+                // Optional
+                onError: function (result) {
+                    
+                    console.log(result)
+                }
+            });
+
+         });
+    });
+
+</script>

@@ -11,23 +11,91 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <div class="text-center">
-        <form asp-action="PaymentWithReturnView" asp-controller="Home" method="post">
-            <article>
-                <label>Bayar: US$5</label>
-            </article>
-            
-            <script src="https://js.stripe.com/v3/"></script>
-            <script src="https://checkout.stripe.com/v3/checkout.js"
-                    class="stripe-button"
-                    data-key="@StripeSettings.Value.PublishKey"
-                    data-locale="auto"
-                    data-description="Test Stripe"
-                    data-amount="500">
-            </script>
+    @*<div class="text-center">
+            <form asp-action="PaymentWithReturnView" asp-controller="Home" method="post">
+                <article>
+                    <label>Bayar: US$5</label>
+                </article>
 
-        </form>
-    </div>
+                <script src="https://js.stripe.com/v3/"></script>
+                <script src="https://checkout.stripe.com/v3/checkout.js"
+                        class="stripe-button"
+                        data-key="@StripeSettings.Value.PublishKey"
+                        data-locale="auto"
+                        data-description="Test Stripe"
+                        data-amount="500">
+                </script>
 
+            </form>
+        </div>*@
+
+        <div class="text-center">
+            <form asp-action="PaymentWithReturnView" asp-controller="Home" method="post">
+                <article>
+                    <label>Bayar: US$5</label>
+                </article>
+
+                @*<script src="https://js.stripe.com/v3/"></script>
+                <script src="https://checkout.stripe.com/v3/checkout.js"
+                        class="stripe-button"
+                        data-key="@StripeSettings.Value.PublishKey"
+                        data-locale="auto"
+                        data-description="Test Stripe"
+                        data-amount="500">
+                </script>*@
+
+                <a onclick="getCardToken()">Click Midtrans</a>
+
+
+            </form>
+        </div>
 
 </div>
+
+<script id="midtrans-script" type="text/javascript"
+        src="https://api.midtrans.com/v2/assets/js/midtrans-new-3ds.min.js"
+        data-environment="sandbox"
+        data-client-key="SB-Mid-client-VrSHfchSoY956Su_"></script>
+
+<script type="text/javascript">
+
+    function getCardToken() {
+        var cardData = {
+            "card_number": 4411111111111118,
+            "card_exp_month": 01,
+            "card_exp_year": 2025,
+            "card_cvv": 123,
+        };
+
+        // callback functions
+        var options = {
+            onSuccess: function (response) {
+                console.log("Ini Response Get Token = " + response);
+
+                var token_id = response.token_id;
+
+                var params = {
+                    cardtoken_id : token_id.toString()
+                };
+
+                $.post('@Url.Action("PaymentCard", "Home")', params, function (result) {
+                    console.log(result);
+                });
+
+
+                console.log('This is the card token_id:', token_id);
+            },
+            onFailure: function (response) {
+                
+                console.log('Fail to get card token_id, response:', response);
+            }
+        };
+
+        MidtransNew3ds.getCardToken(cardData, options);
+    }
+
+
+
+
+
+</script>

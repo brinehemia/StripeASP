@@ -92,3 +92,5 @@ F:\Asp\StripeTest\Stripe Test\obj\Debug\net5.0\Stripe Test.dll
 F:\Asp\StripeTest\Stripe Test\obj\Debug\net5.0\ref\Stripe Test.dll
 F:\Asp\StripeTest\Stripe Test\obj\Debug\net5.0\Stripe Test.pdb
 F:\Asp\StripeTest\Stripe Test\obj\Debug\net5.0\Stripe Test.genruntimeconfig.cache
+F:\Asp\StripeTest\Stripe Test\bin\Debug\net5.0\RestSharp.dll
+F:\Asp\StripeTest\Stripe Test\obj\Debug\net5.0\Razor\Views\Home\SnapTest.cshtml.g.cs
